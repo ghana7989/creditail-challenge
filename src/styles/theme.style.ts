@@ -19,6 +19,18 @@ const THEME = {
     Black: 'rgba(0, 0, 0, 1)',
     White: 'rgba(255, 255, 255, 1)',
     Secondary: 'rgba(239, 239, 239, 0.5)',
+    Red: 'rgba(222, 0, 0, 1)',
+  },
+  SIZE: {
+    HUGE: 56,
+  },
+  RADIUS: {
+    DEFAULT: 6,
+    xs: 2,
+    sm: 4,
+    lg: 8,
+    xl: 12,
+    full: '50%',
   },
 };
 

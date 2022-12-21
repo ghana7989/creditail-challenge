@@ -5,7 +5,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import Onboarding from './src/containers/Onboarding';
 import {RootStackParamList} from './src/types/stack';
-
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 const App = () => {
