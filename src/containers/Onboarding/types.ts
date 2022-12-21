@@ -16,4 +16,5 @@ export type Form1Inputs = {
   emailAddress: string;
   aadharNumber: string;
   panNumber: string;
+  dateOfBirth: string;
 };
