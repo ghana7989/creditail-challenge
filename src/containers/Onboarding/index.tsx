@@ -10,7 +10,7 @@ const OnboardingStack = createNativeStackNavigator<OnboardingStackParamList>();
 const Onboarding = () => {
   return (
     <OnboardingStack.Navigator
-      initialRouteName="OnboardingStep2"
+      initialRouteName="OnboardingStep1"
       screenOptions={{
         header() {
           return <Header />;
