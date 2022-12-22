@@ -1,5 +1,12 @@
 import React, {FC, useCallback, useState} from 'react';
-import {Dimensions, Keyboard, Pressable, StyleSheet, View} from 'react-native';
+import {
+  Dimensions,
+  Keyboard,
+  Pressable,
+  StyleSheet,
+  View,
+  Platform,
+} from 'react-native';
 import Pdf from 'react-native-pdf';
 import SubmitArrow from 'src/assets/icons/submit-arrow.svg';
 import OTPInput from 'src/components/OTPInputField';
@@ -59,7 +66,11 @@ const OnboardingStep2: FC<OnboardingStep2Props> = ({navigation}) => {
         <View style={styles.pdfContainer}>
           <Pdf
             trustAllCerts={false}
-            source={require('src/assets/pdf/sample.pdf')}
+            source={
+              Platform.OS === 'ios'
+                ? require('src/assets/pdf/sample.pdf')
+                : {uri: 'bundle-assets://sample.pdf', cache: true}
+            }
             style={styles.pdf}
           />
         </View>
