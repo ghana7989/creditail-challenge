@@ -42,7 +42,9 @@ function useFetch<T = unknown>(url?: string, options?: RequestInit): State<T> {
 
   useEffect(() => {
     // Do nothing if the url is not given
-    if (!url) return;
+    if (!url) {
+      return;
+    }
 
     cancelRequest.current = false;
 
@@ -63,17 +65,21 @@ function useFetch<T = unknown>(url?: string, options?: RequestInit): State<T> {
 
         const data = (await response.json()) as T;
         cache.current[url] = data;
-        if (cancelRequest.current) return;
+        if (cancelRequest.current) {
+          return;
+        }
 
         dispatch({type: 'fetched', payload: data});
       } catch (error) {
-        if (cancelRequest.current) return;
+        if (cancelRequest.current) {
+          return;
+        }
 
         dispatch({type: 'error', payload: error as Error});
       }
     };
 
-    void fetchData();
+    fetchData();
 
     // Use the cleanup function for avoiding a possibly...
     // ...state update after the component was unmounted
