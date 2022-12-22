@@ -1,105 +1,118 @@
+import {useHeaderHeight} from '@react-navigation/elements';
 import React, {FC, useReducer} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {KeyboardAvoidingView, ScrollView, StyleSheet, View} from 'react-native';
 import ValidatedCorrect from 'src/assets/icons/validated-corect.svg';
 import {Button, SizedBox, Text, TextInput} from 'src/components/atomic';
 import THEME from 'src/styles/theme.style';
 
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {INITIAL_STATE, formReducer} from '../reducers/formReducer';
 import {OnboardingStep1Props} from '../types';
 
-const OnboardingStep1: FC<OnboardingStep1Props> = () => {
+const OnboardingStep1: FC<OnboardingStep1Props> = ({navigation}) => {
   const [formState, dispatch] = useReducer(formReducer, INITIAL_STATE);
+  const headerHeight = useHeaderHeight();
 
   return (
     <View style={styles.container}>
       <View style={styles.image}>
         <Text>Logo</Text>
       </View>
-      <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
-        <Text type="BOLD" style={styles.heading}>
-          Step 1
-        </Text>
-        <Text style={styles.subHeading}>Please enter your details</Text>
-        <TextInput
-          onChangeText={text =>
-            dispatch({type: 'SET_OWNER_NAME', payload: text})
-          }
-          value={formState.ownerName}
-          placeholder="Enter your name"
-          label="Shop Owner Name"
-        />
-        <SizedBox height={12} />
-        <TextInput
-          keyboardType="email-address"
-          onChangeText={text =>
-            dispatch({type: 'SET_EMAIL_ADDRESS', payload: text})
-          }
-          value={formState.emailAddress}
-          placeholder="abcdefgh@gmail.com"
-          label="Email Address"
-        />
-        {!formState.isEmailAddressValid &&
-          formState.emailAddress.length > 0 && (
-            <Text style={styles.error}>Email is Not Valid</Text>
-          )}
-        <SizedBox height={12} />
-        <TextInput
-          keyboardType="phone-pad"
-          isValid={formState.isAadharNumberValid}
-          Icon={ValidatedCorrect}
-          variant="VALIDATING_ICON"
-          maxLength={12}
-          onChangeText={text => {
-            return dispatch({type: 'SET_AADHAR_NUMBER', payload: text});
-          }}
-          value={formState.aadharNumber}
-          placeholder="1234 5678 0123"
-          label="Aadhar Number"
-        />
-        {!formState.isAadharNumberValid &&
-          formState.aadharNumber.length > 0 && (
-            <Text style={styles.error}>Aadhar Number is Not Valid</Text>
-          )}
-        <SizedBox height={12} />
-        <TextInput
-          autoCapitalize="characters"
-          isValid={formState.isPanNumberValid}
-          Icon={ValidatedCorrect}
-          variant="VALIDATING_ICON"
-          maxLength={10}
-          onChangeText={text => {
-            return dispatch({type: 'SET_PAN_NUMBER', payload: text});
-          }}
-          value={formState.panNumber}
-          placeholder="ABCD1234E"
-          label="PAN Number"
-        />
-        {!formState.isPanNumberValid && formState.panNumber.length > 0 && (
-          <Text style={styles.error}>PAN Number is Not Valid</Text>
-        )}
-        {formState.isPanNumberValid && (
-          <>
-            <SizedBox height={12} />
-            <TextInput
-              autoCapitalize="characters"
-              onChangeText={text =>
-                dispatch({type: 'SET_DATE_OF_BIRTH', payload: text})
-              }
-              value={formState.dateOfBirth}
-              placeholder="DD/MM/YYYY"
-              label="Date of Birth"
-            />
-            {!formState.isDateOfBirthValid && (
-              <Text style={styles.error}>Date of Birth is Not Valid</Text>
+      <Text type="BOLD" style={styles.heading}>
+        Step 1
+      </Text>
+      <Text style={styles.subHeading}>Please enter your details</Text>
+      <KeyboardAvoidingView
+        style={styles.keyboardAvoidingView}
+        behavior="padding"
+        keyboardVerticalOffset={headerHeight + 60}
+        enabled>
+        <ScrollView keyboardShouldPersistTaps="always">
+          <TextInput
+            textContentType="name"
+            onChangeText={text =>
+              dispatch({type: 'SET_OWNER_NAME', payload: text})
+            }
+            value={formState.ownerName}
+            placeholder="Enter your name"
+            label="Shop Owner Name"
+          />
+          <SizedBox height={12} />
+          <TextInput
+            textContentType="emailAddress"
+            keyboardType="email-address"
+            onChangeText={text =>
+              dispatch({type: 'SET_EMAIL_ADDRESS', payload: text})
+            }
+            value={formState.emailAddress}
+            placeholder="abcdefgh@gmail.com"
+            label="Email Address"
+          />
+          {!formState.isEmailAddressValid &&
+            formState.emailAddress.length > 0 && (
+              <Text style={styles.error}>Email is Not Valid</Text>
             )}
-          </>
-        )}
-      </KeyboardAwareScrollView>
+          <SizedBox height={12} />
+          <TextInput
+            keyboardType="phone-pad"
+            isValid={formState.isAadharNumberValid}
+            Icon={ValidatedCorrect}
+            variant="VALIDATING_ICON"
+            maxLength={12}
+            onChangeText={text => {
+              return dispatch({type: 'SET_AADHAR_NUMBER', payload: text});
+            }}
+            value={formState.aadharNumber}
+            placeholder="1234 5678 0123"
+            label="Aadhar Number"
+          />
+          {!formState.isAadharNumberValid &&
+            formState.aadharNumber.length > 0 && (
+              <Text style={styles.error}>Aadhar Number is Not Valid</Text>
+            )}
+          <SizedBox height={12} />
+          <TextInput
+            autoCapitalize="characters"
+            isValid={formState.isPanNumberValid}
+            Icon={ValidatedCorrect}
+            variant="VALIDATING_ICON"
+            maxLength={10}
+            onChangeText={text => {
+              return dispatch({type: 'SET_PAN_NUMBER', payload: text});
+            }}
+            value={formState.panNumber}
+            placeholder="ABCD1234E"
+            label="PAN Number"
+          />
+          {!formState.isPanNumberValid && formState.panNumber.length > 0 && (
+            <Text style={styles.error}>PAN Number is Not Valid</Text>
+          )}
+          {formState.isPanNumberValid && (
+            <>
+              <SizedBox height={12} />
+              <TextInput
+                autoCapitalize="characters"
+                onChangeText={text =>
+                  dispatch({type: 'SET_DATE_OF_BIRTH', payload: text})
+                }
+                value={formState.dateOfBirth}
+                placeholder="DD/MM/YYYY"
+                label="Date of Birth"
+              />
+              {!formState.isDateOfBirthValid &&
+                formState.dateOfBirth.length > 0 && (
+                  <Text style={styles.error}>Date of Birth is Not Valid</Text>
+                )}
+            </>
+          )}
+        </ScrollView>
+      </KeyboardAvoidingView>
       <View style={styles.buttonContainer}>
         <Button
           style={styles.button}
-          onPress={() => console.log(formState)}
+          onPress={() => {
+            console.log(formState);
+            navigation.navigate('OnboardingStep2');
+          }}
           isDisabled={!formState.isFormValid}>
           <Text style={styles.buttonText} type="BOLD">
             Submit
@@ -116,6 +129,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 30,
     position: 'relative',
+  },
+  keyboardAvoidingView: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   image: {
     width: 100,

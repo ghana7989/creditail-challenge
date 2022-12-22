@@ -5,7 +5,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {Text} from 'src/components/atomic';
+import Text from '../../Text/index';
 import THEME from 'src/styles/theme.style';
 import {TextInputWithValidatingIconProps} from '../types';
 
